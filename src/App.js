@@ -1,24 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { ButtonSize } from './components/common';
+import { Alert } from 'antd';
+import listenForVoiceInput from './ListenForVoiceInput';
 
-function App() {
+const App = () => {
+  const message     = "You have started mic"
+  const description = "Please refresh app to start over" 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className='app'>
+      <div className='btn-container'>
+        <button id='previous' disabled={true}>Previous</button>
+        <button id='next' disabled={true}>Next</button>
+      </div>
+      <div className='start-container'>
+        <ButtonSize
+          id='start'
+          onClick={listenForVoiceInput}
+          size='large'
+          type='dashed'
         >
-          Learn React
-        </a>
-      </header>
+          Start Mic
+        </ButtonSize>
+      </div>
+      <div className='alert-container' hidden={true}>
+        <Alert
+          closable='true'
+          message={message}
+          description={description}
+          type="info"
+        />
+      </div>
     </div>
   );
 }
