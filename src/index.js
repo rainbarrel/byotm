@@ -5,6 +5,6 @@ import 'antd/dist/antd.css';
 import App from './App';
 import initFirebase from './initializers/firebase';
 
-initFirebase();
+// initFirebase();
 
 ReactDOM.render(<App />, document.getElementById('root'));
