@@ -1,5 +1,5 @@
-# Rainbarrel
-## Input (voice) - a web app
+# BYOTM
+## (Bring Your Own Teachable Machine)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
