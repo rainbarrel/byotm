@@ -1,4 +1,4 @@
-import { recognizer, updateCommand } from './helpers';
+import { recognizer } from './helpers';
 
 const listenForVoiceInput = async () => {
   console.log("Start Mic clicked");
@@ -24,7 +24,7 @@ const listenForVoiceInput = async () => {
 
     if (previous > next && previous > neutral) {
       previousButton.classList.toggle('active');
-      updateCommand('previous');
+      // updateCommand('previous');
 
       setTimeout(() => {
         previousButton.classList.toggle('active');
@@ -32,7 +32,7 @@ const listenForVoiceInput = async () => {
     }
     else if (next > previous && next > neutral) {
       nextButton.classList.toggle('active');
-      updateCommand('next');
+      // updateCommand('next');
 
       setTimeout(() => {
         nextButton.classList.toggle('active');

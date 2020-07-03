@@ -1,27 +1,13 @@
 .app {
+  
+}
+
+.app-title {
+  margin-left: 15px;
+  margin-top: 15px;
+  color: #1967D2;
+}
+
+.app-workflow-container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  min-width: 100vw;
-  min-height: 60vh;
-}
-
-.btn-container button {
-  color: white;
-  width: 100px;
-  height: 150px;
-  font-size: 18px;
-  margin: 20px;
-  background: #1890ff;
-  border-radius: 10px;
-}
-
-.active {
-  background: #adcfef !important; /* FIXME: remove !important later */
-}
-
-.alert-container {
-  text-align: center;
-  width: 85%;
 }
