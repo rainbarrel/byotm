@@ -14,17 +14,17 @@ class App extends React.Component {
     return (
       <div className='app'>
         <div className='app-title'>
-          <h1>
-            BYOTM
-          </h1>
+          <p>
+            BYOTM <span id='title-subtitle'>(powered by <a href='https://teachablemachine.withgoogle.com/' target='_blank' rel='noopener noreferrer'>Teachable Machine</a>)</span>
+          </p>
         </div>
 
         <div className='app-workflow-container'>
           <div>
             <TextField
-              id="workflow-url"
-              label="Your Model URL"
-              variant="outlined"
+              id='workflow-url'
+              label='Your Model URL'
+              variant='outlined'
             />
           </div>
   

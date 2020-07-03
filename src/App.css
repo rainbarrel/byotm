@@ -3,11 +3,25 @@
 }
 
 .app-title {
-  margin-left: 15px;
-  margin-top: 15px;
+  color: #1967D2;
+  font-weight: bold;
+  margin: 15px;
+}
+
+.app-title p {
+  font-size: 4em;
+  margin: 0;
+}
+
+#title-subtitle {
+  font-size: 25px;
+}
+
+#title-subtitle > a  {
   color: #1967D2;
 }
 
 .app-workflow-container {
   display: flex;
+  margin: 140px 90px;
 }
