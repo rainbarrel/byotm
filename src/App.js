@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { WorkflowArrow, ButtonSize } from './components/common';
+import { WorkflowArrow, ButtonSize, RecordingInProgress } from './components/common';
 import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
 import Output from './Output';
@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       startDisabled: false,
       stopDisabled: true,
+      showInProgress: false,
 
       modelUrl: '',
       output1PhoneNumber: '',
@@ -46,7 +47,7 @@ class App extends React.Component {
     let errorTracker = {};
     let errorPresent = false;
 
-    const fieldsToValidate = {
+    const fieldValues = {
       modelUrl: this.state.modelUrl,
       output1PhoneNumber: this.state.output1PhoneNumber,
       output1Message: this.state.output1Message,
@@ -54,9 +55,9 @@ class App extends React.Component {
       output2Message: this.state.output2Message,
     }
 
-    for (let field in fieldsToValidate) {
-      if (fieldsToValidate.hasOwnProperty(field)) {
-        const val = fieldsToValidate[field];
+    for (let field in fieldValues) {
+      if (fieldValues.hasOwnProperty(field)) {
+        const val = fieldValues[field];
 
         if (val.length < 1) {
           errorPresent = true;
@@ -73,14 +74,21 @@ class App extends React.Component {
       this.setState({
         startDisabled: true,
         stopDisabled: false,
+        showInProgress: true,
         errors: { ...errorTracker }
       });
 
-      // start :)
+      
     }
   }
 
   render() {
+    let inProgressFeedback;
+
+    if (this.state.showInProgress) {
+      inProgressFeedback = <RecordingInProgress />
+    }
+
     return (
       <div className='app'>
         <div className='app-title'>
@@ -88,6 +96,8 @@ class App extends React.Component {
             BYOTM <span id='title-subtitle'>(Bring Your Own <a href='https://teachablemachine.withgoogle.com/' target='_blank' rel='noopener noreferrer'>Teachable Machine</a>)</span>
           </p>
         </div>
+
+        {inProgressFeedback}
 
         <div className='app-workflow-container'>
           <InputUrl
