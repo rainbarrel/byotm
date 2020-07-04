@@ -3,6 +3,7 @@ import './App.css';
 import { WorkflowArrow } from './components/common';
 import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
+import Output from './Output';
 import InputUrl from './InputUrl';
 
 class App extends React.Component {
@@ -36,7 +37,7 @@ class App extends React.Component {
             </div>
           </div>
 
-          <InputDescription />
+          <Output />
         </div>
   
         <div className='app-buttons-container'>
