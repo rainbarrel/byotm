@@ -26,12 +26,12 @@ const InputDescription = () => {
         <Grid container alignItems="center">
           <Grid item xs>
             <Typography gutterBottom variant="h5">
-              Your First Audio Input
+              Audio Input 1
             </Typography>
           </Grid>
         </Grid>
         <Typography color="textSecondary" variant="body2">
-          This is taken from your Teachable Machine model. 
+           This corresponds to the first audio class you created in Teachable Machine (after Background Noise). When your model recognizes this audio input, it will trigger Output 1, as seen to the right.
         </Typography>
       </div>
 
@@ -41,13 +41,12 @@ const InputDescription = () => {
         <Grid container alignItems="center">
           <Grid item xs>
             <Typography gutterBottom variant="h5">
-            Your Second Audio Input
+              Audio Input 2
             </Typography>
           </Grid>
         </Grid>
         <Typography color="textSecondary" variant="body2">
-          Pinstriped cornflower blue cotton blouse takes you on a walk to the park or just down the
-          hall.
+          This corresponds to the second audio class you created in Teachable Machine (after Background Noise). When your model recognizes this audio input, it will trigger Output 2, as seen to the right.
         </Typography>
       </div>
     </div>

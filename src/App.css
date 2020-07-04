@@ -23,7 +23,7 @@
 
 .app-workflow-container {
   display: flex;
-  margin: 140px 40px 80px 40px;
+  margin: 65px 40px 80px 40px;
   justify-content: space-between;
   align-items: center;
 }
