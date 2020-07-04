@@ -85,14 +85,15 @@ class App extends React.Component {
     const recognizer = await generateRecognizer(modelUrl);
 
     const classLabels = recognizer.wordLabels();
-    let audioClass1, audioClass2;
-    [audioClass1, audioClass2] = classLabels;
+
+    const audioClass1 = classLabels[1];
+    const audioClass2 = classLabels[2];
 
     recognizer.listen(result => {
       const scores = result.scores;
 
-      let audioClass1Score, audioClass2Score;
-      [audioClass1Score, audioClass2Score] = scores;
+      const audioClass1Score = scores[1];
+      const audioClass2Score = scores[2];
 
       if (audioClass1Score > audioClass2Score) {
         // audioClass1 triggers Output 1
@@ -101,14 +102,12 @@ class App extends React.Component {
       }
     }, {
       // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
-      probabilityThreshold: 0.95,
+      probabilityThreshold: 0.99,
       includeSpectrogram: false,
       invokeCallbackOnNoiseAndUnknown: false,
       overlapFactor: 0.50,
     })
       .then(() => {
-        console.log('RECOGNIZER SET UP!');
-
         this.setState({
           audioClass1Name: audioClass1,
           audioClass2Name: audioClass2,
