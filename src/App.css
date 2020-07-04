@@ -23,5 +23,12 @@
 
 .app-workflow-container {
   display: flex;
-  margin: 140px 90px;
+  margin: 140px 40px 80px 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workflow-stacked-arrows {
+  display: 'flex';
+  flex-direction: 'column';
 }

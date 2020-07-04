@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import { ButtonSize } from './components/common';
+import { WorkflowArrow } from './components/common';
 import listenForVoiceInput from './ListenForVoiceInput';
-import TextField from '@material-ui/core/TextField';
+import InputDescription from './InputDescription';
+import InputUrl from './InputUrl';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,19 +21,22 @@ class App extends React.Component {
         </div>
 
         <div className='app-workflow-container'>
-          <div>
-            <TextField
-              id='workflow-url'
-              label='Your Model URL'
-              variant='outlined'
-            />
+          <InputUrl />
+
+          <WorkflowArrow />
+
+          <InputDescription />
+          
+          <div className='workflow-stacked-arrows'>
+            <div>
+              <WorkflowArrow />
+            </div>
+            <div>
+              <WorkflowArrow />
+            </div>
           </div>
-  
-          <div>
-          </div>
-  
-          <div>
-          </div>
+
+          <InputDescription />
         </div>
   
         <div className='app-buttons-container'>
