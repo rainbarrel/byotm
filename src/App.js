@@ -11,20 +11,28 @@ import StopIcon from '@material-ui/icons/Stop';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       startDisabled: false,
       stopDisabled: true,
 
       modelUrl: '',
-      modelUrlError: false,
-
       output1PhoneNumber: '',
       output1Message: '',
       output2PhoneNumber: '',
       output2Message: '',
+
+      errors: {
+        modelUrl: false,
+        output1PhoneNumber: false,
+        output1Message: false,
+        output2PhoneNumber: false,
+        output2Message: false,
+      }
     };
 
     this.onChangeText = this.onChangeText.bind(this);
+    this.onStartClick = this.onStartClick.bind(this);
   }
 
   onChangeText(event, property) {
@@ -32,6 +40,44 @@ class App extends React.Component {
     const text = event.target.value;
     newState[property] = text;
     this.setState(newState);
+  }
+
+  onStartClick() {
+    let errorTracker = {};
+    let errorPresent = false;
+
+    const fieldsToValidate = {
+      modelUrl: this.state.modelUrl,
+      output1PhoneNumber: this.state.output1PhoneNumber,
+      output1Message: this.state.output1Message,
+      output2PhoneNumber: this.state.output2PhoneNumber,
+      output2Message: this.state.output2Message,
+    }
+
+    for (let field in fieldsToValidate) {
+      if (fieldsToValidate.hasOwnProperty(field)) {
+        const val = fieldsToValidate[field];
+
+        if (val.length < 1) {
+          errorPresent = true;
+          errorTracker[field] = true;
+        } else {
+          errorTracker[field] = false;
+        }
+      }
+    }
+
+    if (errorPresent) {
+      this.setState({ errors: { ...errorTracker } });
+    } else {
+      this.setState({
+        startDisabled: true,
+        stopDisabled: false,
+        errors: { ...errorTracker }
+      });
+
+      // start :)
+    }
   }
 
   render() {
@@ -46,7 +92,7 @@ class App extends React.Component {
         <div className='app-workflow-container'>
           <InputUrl
             onChange={(e) => this.onChangeText(e, 'modelUrl')}
-            error={this.state.modelUrlError}
+            error={this.state.errors.modelUrl}
           />
 
           <WorkflowArrow />
@@ -62,7 +108,10 @@ class App extends React.Component {
             </div>
           </div>
 
-          <Output onChangeText={this.onChangeText} />
+          <Output
+            onChangeText={this.onChangeText}
+            errors={this.state.errors}
+          />
         </div>
   
         <div className='app-buttons-container'>
@@ -73,6 +122,7 @@ class App extends React.Component {
             variant='contained'
             styles={{ backgroundColor: '#5DC245', color: 'white' }}
             endIcon={{ icon: <PlayArrowIcon /> }}
+            onClick={this.onStartClick}
           >
             START
           </ButtonSize>

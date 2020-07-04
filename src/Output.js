@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Output = ({ onChangeText }) => {
+const Output = ({ onChangeText, errors }) => {
   const classes = useStyles();
+  const errorMessage = 'Please ensure this field is populated and formatted correctly (see placeholder)'
 
   return (
     <div className={classes.root}>
@@ -39,6 +40,8 @@ const Output = ({ onChangeText }) => {
           label="Recipient Phone Number"
           placeholder="555-916-1234"
           onChange={(e) => onChangeText(e, 'output1PhoneNumber')}
+          error={errors['output1PhoneNumber']}
+          helperText={errors['output1PhoneNumber'] ? errorMessage : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -55,6 +58,8 @@ const Output = ({ onChangeText }) => {
           multiline
           placeholder="Hi, I just wanted to tell you that I love you!"
           onChange={(e) => onChangeText(e, 'output1Message')}
+          error={errors['output1Message']}
+          helperText={errors['output1Message'] ? errorMessage : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -80,6 +85,8 @@ const Output = ({ onChangeText }) => {
           label="Recipient Phone Number"
           placeholder="555-818-4321"
           onChange={(e) => onChangeText(e, 'output2PhoneNumber')}
+          error={errors['output2PhoneNumber']}
+          helperText={errors['output2PhoneNumber'] ? errorMessage : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -96,6 +103,8 @@ const Output = ({ onChangeText }) => {
           multiline
           placeholder="Can you please call me and leave a message? I miss you."
           onChange={(e) => onChangeText(e, 'output2Message')}
+          error={errors['output2Message']}
+          helperText={errors['output2Message'] ? errorMessage : ''}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
