@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Output = () => {
+const Output = ({ onChangeText }) => {
   const classes = useStyles();
 
   return (
@@ -38,6 +38,7 @@ const Output = () => {
           className="output-phone-number"
           label="Recipient Phone Number"
           placeholder="555-916-1234"
+          onChange={(e) => onChangeText(e, 'output1PhoneNumber')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -53,6 +54,7 @@ const Output = () => {
           label="Message"
           multiline
           placeholder="Hi, I just wanted to tell you that I love you!"
+          onChange={(e) => onChangeText(e, 'output1Message')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -77,6 +79,7 @@ const Output = () => {
           className="output-phone-number"
           label="Recipient Phone Number"
           placeholder="555-818-4321"
+          onChange={(e) => onChangeText(e, 'output2PhoneNumber')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -92,6 +95,7 @@ const Output = () => {
           label="Message"
           multiline
           placeholder="Can you please call me and leave a message? I miss you."
+          onChange={(e) => onChangeText(e, 'output2Message')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

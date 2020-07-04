@@ -62,7 +62,7 @@ class App extends React.Component {
             </div>
           </div>
 
-          <Output />
+          <Output onChangeText={this.onChangeText} />
         </div>
   
         <div className='app-buttons-container'>
