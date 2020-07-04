@@ -99,11 +99,16 @@ class App extends React.Component {
   }
 
   async startRecognizer(fieldValues, errorTracker) {
-    const { modelUrl } = fieldValues;
+    const {
+      modelUrl,
+      output1PhoneNumber,
+      output1Message,
+      output2PhoneNumber,
+      output2Message,
+    } = fieldValues;
+
     const recognizer = await generateRecognizer(modelUrl);
-
     const classLabels = recognizer.wordLabels();
-
     const audioClass1 = classLabels[1];
     const audioClass2 = classLabels[2];
 
@@ -115,8 +120,12 @@ class App extends React.Component {
 
       if (audioClass1Score > audioClass2Score) {
         // audioClass1 triggers Output 1
+        // output1PhoneNumber
+        // output1Message
       } else if (audioClass2Score > audioClass1Score) {
         // audioClass2 triggers Output 2
+        // output2PhoneNumber
+        // output2Message
       }
     }, {
       // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
