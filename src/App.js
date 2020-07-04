@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import { WorkflowArrow } from './components/common';
+import { WorkflowArrow, ButtonSize } from './components/common';
 import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
 import Output from './Output';
 import InputUrl from './InputUrl';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import StopIcon from '@material-ui/icons/Stop';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,9 +43,25 @@ class App extends React.Component {
         </div>
   
         <div className='app-buttons-container'>
-          <div>
-          </div>
-  
+          <ButtonSize
+            id='start-button'
+            size='large'
+            variant='contained'
+            styles={{ backgroundColor: '#5DC245', color: 'white' }}
+            endIcon={{ icon: <PlayArrowIcon /> }}
+          >
+            START
+          </ButtonSize>
+
+          <ButtonSize
+            id='stop-button'
+            size='large'
+            variant='contained'
+            styles={{ backgroundColor: '#CF142B', color: 'white' }}
+            endIcon={{ icon: <StopIcon /> }}
+          >
+            STOP
+          </ButtonSize>
           <div>
           </div>
         </div>

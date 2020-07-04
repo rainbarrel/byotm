@@ -23,7 +23,7 @@
 
 .app-workflow-container {
   display: flex;
-  margin: 65px 40px 80px 40px;
+  margin: 65px 40px 60px 40px;
   justify-content: space-between;
   align-items: center;
 }
@@ -31,4 +31,19 @@
 .workflow-stacked-arrows {
   display: 'flex';
   flex-direction: 'column';
+}
+
+.app-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 30%;
+}
+
+#start-button:hover {
+  background-color: #9de88b;
+}
+
+#stop-button:hover {
+  background-color: #db7a86;
 }
