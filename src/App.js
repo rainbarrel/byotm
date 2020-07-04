@@ -16,7 +16,7 @@ class App extends React.Component {
       <div className='app'>
         <div className='app-title'>
           <p>
-            BYOTM <span id='title-subtitle'>(powered by <a href='https://teachablemachine.withgoogle.com/' target='_blank' rel='noopener noreferrer'>Teachable Machine</a>)</span>
+            BYOTM <span id='title-subtitle'>(Bring Your Own <a href='https://teachablemachine.withgoogle.com/' target='_blank' rel='noopener noreferrer'>Teachable Machine</a>)</span>
           </p>
         </div>
 

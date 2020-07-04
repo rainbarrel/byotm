@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 300,
     backgroundColor: theme.palette.background.paper,
     borderRadius: '5px',
     boxShadow: '0 4px 10px #777',
