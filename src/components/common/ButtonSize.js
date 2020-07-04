@@ -6,6 +6,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 const ButtonSize = (props) => {
   const {
     id,
+    disabled,
     onClick,
     size,
     variant,
@@ -23,6 +24,7 @@ const ButtonSize = (props) => {
   return (
     <Button
       id={id}
+      disabled={disabled}
       classes={{ root: classes.root }}
       onClick={onClick}
       size={size}

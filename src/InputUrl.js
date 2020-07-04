@@ -9,12 +9,14 @@ const useStyles = makeStyles({
   },
 });
 
-const InputUrl = () => {
+const InputUrl = ({ onChange, error }) => {
   const classes = useStyles();
 
   return (
     <TextField
       id='workflow-url'
+      error={error}
+      onChange={onChange}
       classes={{ root: classes.root }}
       label='Your Model URL'
       variant='outlined'

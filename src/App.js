@@ -11,7 +11,27 @@ import StopIcon from '@material-ui/icons/Stop';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      startDisabled: false,
+      stopDisabled: true,
+
+      modelUrl: '',
+      modelUrlError: false,
+
+      output1PhoneNumber: '',
+      output1Message: '',
+      output2PhoneNumber: '',
+      output2Message: '',
+    };
+
+    this.onChangeText = this.onChangeText.bind(this);
+  }
+
+  onChangeText(event, property) {
+    let newState = {};
+    const text = event.target.value;
+    newState[property] = text;
+    this.setState(newState);
   }
 
   render() {
@@ -24,7 +44,10 @@ class App extends React.Component {
         </div>
 
         <div className='app-workflow-container'>
-          <InputUrl />
+          <InputUrl
+            onChange={(e) => this.onChangeText(e, 'modelUrl')}
+            error={this.state.modelUrlError}
+          />
 
           <WorkflowArrow />
 
@@ -45,6 +68,7 @@ class App extends React.Component {
         <div className='app-buttons-container'>
           <ButtonSize
             id='start-button'
+            disabled={this.state.startDisabled}
             size='large'
             variant='contained'
             styles={{ backgroundColor: '#5DC245', color: 'white' }}
@@ -55,6 +79,7 @@ class App extends React.Component {
 
           <ButtonSize
             id='stop-button'
+            disabled={this.state.stopDisabled}
             size='large'
             variant='contained'
             styles={{ backgroundColor: '#CF142B', color: 'white' }}
