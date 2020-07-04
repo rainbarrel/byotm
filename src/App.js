@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { WorkflowArrow, ButtonSize, RecordingInProgress } from './components/common';
 import { generateRecognizer } from './helpers';
-import listenForVoiceInput from './ListenForVoiceInput';
+// import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
 import Output from './Output';
 import InputUrl from './InputUrl';
@@ -107,6 +107,8 @@ class App extends React.Component {
       overlapFactor: 0.50,
     })
       .then(() => {
+        console.log('RECOGNIZER SET UP!');
+
         this.setState({
           audioClass1Name: audioClass1,
           audioClass2Name: audioClass2,
