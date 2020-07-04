@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InputDescription = () => {
+const InputDescription = ({ audioClass1Name, audioClass2Name }) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +26,7 @@ const InputDescription = () => {
         <Grid container alignItems="center">
           <Grid item xs>
             <Typography gutterBottom variant="h5">
-              Audio Input 1
+              {audioClass1Name ? audioClass1Name : 'Audio Input 1'}
             </Typography>
           </Grid>
         </Grid>
@@ -41,7 +41,7 @@ const InputDescription = () => {
         <Grid container alignItems="center">
           <Grid item xs>
             <Typography gutterBottom variant="h5">
-              Audio Input 2
+              {audioClass2Name ? audioClass2Name : 'Audio Input 2'}
             </Typography>
           </Grid>
         </Grid>

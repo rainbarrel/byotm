@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { WorkflowArrow, ButtonSize, RecordingInProgress } from './components/common';
+import { generateRecognizer } from './helpers';
 import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
 import Output from './Output';
@@ -29,11 +30,15 @@ class App extends React.Component {
         output1Message: false,
         output2PhoneNumber: false,
         output2Message: false,
-      }
+      },
+
+      audioClass1Name: null,
+      audioClass2Name: null,
     };
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onStartClick = this.onStartClick.bind(this);
+    this.startRecognizer = this.startRecognizer.bind(this);
   }
 
   onChangeText(event, property) {
@@ -71,15 +76,46 @@ class App extends React.Component {
     if (errorPresent) {
       this.setState({ errors: { ...errorTracker } });
     } else {
-      this.setState({
-        startDisabled: true,
-        stopDisabled: false,
-        showInProgress: true,
-        errors: { ...errorTracker }
-      });
-
-      
+      this.startRecognizer(fieldValues, errorTracker);
     }
+  }
+
+  async startRecognizer(fieldValues, errorTracker) {
+    const { modelUrl } = fieldValues;
+    const recognizer = await generateRecognizer(modelUrl);
+
+    const classLabels = recognizer.wordLabels();
+    let audioClass1, audioClass2;
+    [audioClass1, audioClass2] = classLabels;
+
+    recognizer.listen(result => {
+      const scores = result.scores;
+
+      let audioClass1Score, audioClass2Score;
+      [audioClass1Score, audioClass2Score] = scores;
+
+      if (audioClass1Score > audioClass2Score) {
+        // audioClass1 triggers Output 1
+      } else if (audioClass2Score > audioClass1Score) {
+        // audioClass2 triggers Output 2
+      }
+    }, {
+      // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
+      probabilityThreshold: 0.95,
+      includeSpectrogram: false,
+      invokeCallbackOnNoiseAndUnknown: false,
+      overlapFactor: 0.50,
+    })
+      .then(() => {
+        this.setState({
+          audioClass1Name: audioClass1,
+          audioClass2Name: audioClass2,
+          startDisabled: true,
+          stopDisabled: false,
+          showInProgress: true,
+          errors: { ...errorTracker }
+        });
+      });
   }
 
   render() {
@@ -107,8 +143,11 @@ class App extends React.Component {
 
           <WorkflowArrow />
 
-          <InputDescription />
-          
+          <InputDescription
+            audioClass1Name={this.state.audioClass1Name}
+            audioClass2Name={this.state.audioClass2Name}
+          />
+
           <div className='workflow-stacked-arrows'>
             <div>
               <WorkflowArrow />
