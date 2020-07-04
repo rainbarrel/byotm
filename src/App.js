@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { WorkflowArrow, ButtonSize, RecordingInProgress } from './components/common';
 import { generateRecognizer } from './helpers';
-// import listenForVoiceInput from './ListenForVoiceInput';
 import InputDescription from './InputDescription';
 import Output from './Output';
 import InputUrl from './InputUrl';
@@ -14,6 +13,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      recognizer: null,
+
       startDisabled: false,
       stopDisabled: true,
       showInProgress: false,
@@ -38,6 +39,7 @@ class App extends React.Component {
 
     this.onChangeText = this.onChangeText.bind(this);
     this.onStartClick = this.onStartClick.bind(this);
+    this.onStopClick = this.onStopClick.bind(this);
     this.startRecognizer = this.startRecognizer.bind(this);
   }
 
@@ -46,6 +48,22 @@ class App extends React.Component {
     const text = event.target.value;
     newState[property] = text;
     this.setState(newState);
+  }
+
+  onStopClick() {
+    const { recognizer } = this.state;
+
+    recognizer.stopListening()
+      .then(() => {
+        this.setState({
+          recognizer: null,
+          audioClass1Name: null,
+          audioClass2Name: null,
+          startDisabled: false,
+          stopDisabled: true,
+          showInProgress: false,
+        });
+      });
   }
 
   onStartClick() {
@@ -109,6 +127,7 @@ class App extends React.Component {
     })
       .then(() => {
         this.setState({
+          recognizer: recognizer,
           audioClass1Name: audioClass1,
           audioClass2Name: audioClass2,
           startDisabled: true,
@@ -184,6 +203,7 @@ class App extends React.Component {
             variant='contained'
             styles={{ backgroundColor: '#CF142B', color: 'white' }}
             endIcon={{ icon: <StopIcon /> }}
+            onClick={this.onStopClick}
           >
             STOP
           </ButtonSize>
