@@ -68,6 +68,11 @@ class App extends React.Component {
           startDisabled: false,
           stopDisabled: true,
           showInProgress: false,
+          waitingForConfirmation: false,
+          waitingForConfirmationState: 'messagePreflight',
+          audioClassTriggered: null,
+          phoneNumberRecipient: null,
+          messageToSend: null,
         });
       });
   }
