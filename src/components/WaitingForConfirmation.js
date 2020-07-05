@@ -1,6 +1,7 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import HightlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const WaitingForConfirmation = ({ flightState, audioClass }) => {
   let content;
@@ -30,6 +31,15 @@ const WaitingForConfirmation = ({ flightState, audioClass }) => {
           <CheckCircleIcon />
           <br></br>
           <span style={{ fontWeight: 'bold' }}>Your message has been sent!</span>
+        </p>
+      );
+      break;
+    case 'messageFailedFlight':
+      content = (
+        <p className='waiting-for-confirmation-banner-text'>
+          <HightlightOffIcon />
+          <br></br>
+          <span style={{ fontWeight: 'bold' }}>Your message has failed to send. Please try again.</span>
         </p>
       );
       break;

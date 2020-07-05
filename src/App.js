@@ -77,11 +77,11 @@ class App extends React.Component {
     let errorPresent = false;
 
     const fieldValues = {
-      modelUrl: this.state.modelUrl,
-      output1PhoneNumber: this.state.output1PhoneNumber,
-      output1Message: this.state.output1Message,
-      output2PhoneNumber: this.state.output2PhoneNumber,
-      output2Message: this.state.output2Message,
+      modelUrl: this.state.modelUrl.trim(),
+      output1PhoneNumber: this.state.output1PhoneNumber.trim(),
+      output1Message: this.state.output1Message.trim(),
+      output2PhoneNumber: this.state.output2PhoneNumber.trim(),
+      output2Message: this.state.output2Message.trim(),
     }
 
     for (let field in fieldValues) {
@@ -190,7 +190,7 @@ class App extends React.Component {
                 audioClassTriggered: null,
                 phoneNumberRecipient: null,
                 messageToSend: null,
-                waitingForConfirmationState: 'messagePostFlight',
+                waitingForConfirmationState: 'messageFailedFlight',
               });
 
               setTimeout(() => {
