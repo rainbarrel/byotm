@@ -142,11 +142,11 @@ class App extends React.Component {
     if (errorPresent) {
       this.setState({ errors: { ...errorTracker } });
     } else {
-      this.startRecognizer(fieldValues, errorTracker);
+      this.startRecognizer(fieldValues);
     }
   }
 
-  async startRecognizer(fieldValues, errorTracker) {
+  async startRecognizer(fieldValues) {
     const {
       output1PhoneNumber,
       output1Message,
@@ -257,7 +257,13 @@ class App extends React.Component {
           startDisabled: true,
           stopDisabled: false,
           showInProgress: true,
-          errors: { ...errorTracker }
+          errors: {
+            modelUrl: false,
+            output1PhoneNumber: false,
+            output1Message: false,
+            output2PhoneNumber: false,
+            output2Message: false,
+          },
         });
       });
   }
