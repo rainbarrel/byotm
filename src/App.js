@@ -118,15 +118,37 @@ class App extends React.Component {
       const audioClass1Score = scores[1];
       const audioClass2Score = scores[2];
 
+      let phoneNumberRecipient;
+      let messageToSend;
+
       if (audioClass1Score > audioClass2Score) {
-        // audioClass1 triggers Output 1
-        // output1PhoneNumber
-        // output1Message
+        phoneNumberRecipient = output1PhoneNumber;
+        messageToSend = output1Message;
       } else if (audioClass2Score > audioClass1Score) {
-        // audioClass2 triggers Output 2
-        // output2PhoneNumber
-        // output2Message
+        phoneNumberRecipient = output2PhoneNumber;
+        messageToSend = output2Message;
       }
+
+      const body = {
+        payload: {
+          phoneNumber: phoneNumberRecipient,
+          message: messageToSend
+        }
+      };
+
+      fetch('https://us-east1-byotm-282218.cloudfunctions.net/twilio-send-sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          console.log('Success: ', res);
+        })
+        .catch((error) => {
+          console.error('Error: ', error);
+        });
     }, {
       // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
       probabilityThreshold: 0.995,
