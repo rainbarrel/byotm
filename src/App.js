@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       recognizer: null,
 
-      waitingForConfirmation: true,
+      waitingForConfirmation: false,
 
       audioClassTriggered: null,
       phoneNumberRecipient: null,
