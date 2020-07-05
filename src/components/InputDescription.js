@@ -31,7 +31,7 @@ const InputDescription = ({ audioClass1Name, audioClass2Name }) => {
           </Grid>
         </Grid>
         <Typography color="textSecondary" variant="body2">
-           When your model recognizes audio input from this class, it will trigger Output 1, as seen to the right.
+           Your Audio Class name will be populated here when you enter your Model URL. When your model recognizes audio input from this class, it will trigger Output 1, as seen to the right.
         </Typography>
       </div>
 
@@ -46,7 +46,7 @@ const InputDescription = ({ audioClass1Name, audioClass2Name }) => {
           </Grid>
         </Grid>
         <Typography color="textSecondary" variant="body2">
-          When your model recognizes audio input from this class, it will trigger Output 2, as seen to the right.
+          Your Audio Class name will be populated here when you enter your Model URL. When your model recognizes audio input from this class, it will trigger Output 2, as seen to the right.
         </Typography>
       </div>
     </div>
