@@ -22,13 +22,13 @@ const HTMLTooltip = withStyles((theme) => ({
 
 const InputUrl = ({ onChange, error, disabled }) => {
   const classes = useStyles();
-  const errorMessage = 'Please ensure this field is populated and formatted correctly (see placeholder)'
+  const errorMessage = 'Please ensure this field is populated and a valid Model URL (see tooltip)'
 
   return (
     <HTMLTooltip
       title={
         <React.Fragment>
-          This Model URL comes from your Audio Project in Teachable Machine
+          This Model URL comes from your Audio Project in Teachable Machine (ex. https://teachablemachine.withgoogle.com/models/n2uo7MJNI/)
         </React.Fragment>
       }
     >

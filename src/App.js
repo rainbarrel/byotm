@@ -46,13 +46,44 @@ class App extends React.Component {
     this.onStartClick = this.onStartClick.bind(this);
     this.onStopClick = this.onStopClick.bind(this);
     this.startRecognizer = this.startRecognizer.bind(this);
+    this.validateModelUrl = this.validateModelUrl.bind(this);
   }
 
-  onChangeText(event, property) {
+  async onChangeText(event, property) {
     let newState = {};
     const text = event.target.value;
     newState[property] = text;
-    this.setState(newState);
+
+    if (property === 'modelUrl') {
+      if (this.validateModelUrl(text)) {
+        const recognizer = await generateRecognizer(text);
+        const classLabels = recognizer.wordLabels();
+        let classLabelsWithoutBackgroundNoise = [];
+
+        for (let i = 0; i < classLabels.length; i++) {
+          let classLabel = classLabels[i];
+
+          if (classLabel !== '_background_noise_') {
+            classLabelsWithoutBackgroundNoise.push(classLabel);
+          }
+        }
+
+        const audioClass1Name = classLabelsWithoutBackgroundNoise[0];
+        const audioClass2Name = classLabelsWithoutBackgroundNoise[1];
+
+        newState.recognizer = recognizer;
+        newState.audioClass1Name = audioClass1Name;
+        newState.audioClass2Name = audioClass2Name;
+      } else {
+        newState.recognizer = null;
+        newState.audioClass1Name = null;
+        newState.audioClass2Name = null;
+      }
+
+      this.setState(newState);
+    } else {
+      this.setState(newState);
+    }
   }
 
   onStopClick() {
@@ -61,10 +92,7 @@ class App extends React.Component {
     recognizer.stopListening()
       .then(() => {
         this.setState({
-          recognizer: null,
           inputsDisabled: false,
-          audioClass1Name: null,
-          audioClass2Name: null,
           startDisabled: false,
           stopDisabled: true,
           showInProgress: false,
@@ -75,6 +103,15 @@ class App extends React.Component {
           messageToSend: null,
         });
       });
+  }
+
+  validateModelUrl(modelUrl) {
+    // valid modelUrl looks as follows:
+    // https://teachablemachine.withgoogle.com/models/n2uo9MJNZ/
+    const prefix = 'https://teachablemachine.withgoogle.com/models/';
+    const id = modelUrl.split('models/')[1];
+
+    return (modelUrl.includes(prefix) && (id.length === 9 || id.length === 10));
   }
 
   onStartClick() {
@@ -111,17 +148,17 @@ class App extends React.Component {
 
   async startRecognizer(fieldValues, errorTracker) {
     const {
-      modelUrl,
       output1PhoneNumber,
       output1Message,
       output2PhoneNumber,
       output2Message,
     } = fieldValues;
 
-    const recognizer = await generateRecognizer(modelUrl);
-    const classLabels = recognizer.wordLabels();
-    const audioClass1 = classLabels[1];
-    const audioClass2 = classLabels[2];
+    const {
+      recognizer,
+      audioClass1Name,
+      audioClass2Name,
+    } = this.state;
 
     recognizer.listen(result => {
       const scores = result.scores;
@@ -133,11 +170,11 @@ class App extends React.Component {
       let messageToSend;
 
       if (audioClass1Score > audioClass2Score) {
-        audioClassTriggered = audioClass1;
+        audioClassTriggered = audioClass1Name;
         phoneNumberRecipient = output1PhoneNumber;
         messageToSend = output1Message;
       } else if (audioClass2Score > audioClass1Score) {
-        audioClassTriggered = audioClass2;
+        audioClassTriggered = audioClass2Name;
         phoneNumberRecipient = output2PhoneNumber;
         messageToSend = output2Message;
       }
@@ -216,10 +253,7 @@ class App extends React.Component {
     })
       .then(() => {
         this.setState({
-          recognizer: recognizer,
           inputsDisabled: true,
-          audioClass1Name: audioClass1,
-          audioClass2Name: audioClass2,
           startDisabled: true,
           stopDisabled: false,
           showInProgress: true,
