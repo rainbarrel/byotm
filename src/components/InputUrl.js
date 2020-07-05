@@ -28,7 +28,7 @@ const InputUrl = ({ onChange, error, disabled }) => {
     <HTMLTooltip
       title={
         <React.Fragment>
-          Ensure your model names (following Background Noise) are listed in alphabetical order, & begin with lower-cased letters.
+          This Model URL comes from your Audio Project in Teachable Machine
         </React.Fragment>
       }
     >
