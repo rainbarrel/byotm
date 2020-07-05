@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       recognizer: null,
 
-      waitingForConfirmation: false,
+      waitingForConfirmation: true,
 
       audioClassTriggered: null,
       phoneNumberRecipient: null,
@@ -216,7 +216,9 @@ class App extends React.Component {
     let waitingForConfirmation;
 
     if (this.state.waitingForConfirmation) {
-      waitingForConfirmation = <WaitingForConfirmation />
+      waitingForConfirmation = (
+        <WaitingForConfirmation audioClass={this.state.audioClassTriggered} />
+      );
     }
 
     return (
