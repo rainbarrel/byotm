@@ -246,7 +246,7 @@ class App extends React.Component {
       }
     }, {
       // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
-      probabilityThreshold: 0.995,
+      probabilityThreshold: 0.99,
       includeSpectrogram: false,
       invokeCallbackOnNoiseAndUnknown: false,
       overlapFactor: 0.50,
