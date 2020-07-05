@@ -13,6 +13,7 @@ class App extends React.Component {
       recognizer: null,
 
       waitingForConfirmation: false,
+      waitingForConfirmationState: 'messagePreflight',
 
       audioClassTriggered: null,
       phoneNumberRecipient: null,
@@ -159,6 +160,8 @@ class App extends React.Component {
             }
           };
 
+          this.setState({ waitingForConfirmationState: 'messageInFlight' });
+
           fetch('https://us-east1-byotm-282218.cloudfunctions.net/twilio-send-sms', {
             method: 'POST',
             headers: {
@@ -171,8 +174,15 @@ class App extends React.Component {
                 audioClassTriggered: null,
                 phoneNumberRecipient: null,
                 messageToSend: null,
-                waitingForConfirmation: false,
+                waitingForConfirmationState: 'messagePostFlight',
               });
+
+              setTimeout(() => {
+                this.setState({
+                  waitingForConfirmation: false,
+                  waitingForConfirmationState: 'messagePreflight',
+                });
+              }, 6000);
             })
             .catch((error) => {
               console.error('Error: ', error);
@@ -180,8 +190,15 @@ class App extends React.Component {
                 audioClassTriggered: null,
                 phoneNumberRecipient: null,
                 messageToSend: null,
-                waitingForConfirmation: false,
+                waitingForConfirmationState: 'messagePostFlight',
               });
+
+              setTimeout(() => {
+                this.setState({
+                  waitingForConfirmation: false,
+                  waitingForConfirmationState: 'messagePreflight',
+                });
+              }, 6000);
             });
         }
       }
@@ -217,7 +234,9 @@ class App extends React.Component {
 
     if (this.state.waitingForConfirmation) {
       waitingForConfirmation = (
-        <WaitingForConfirmation audioClass={this.state.audioClassTriggered} />
+        <WaitingForConfirmation
+          flightState={this.state.waitingForConfirmationState}
+          audioClass={this.state.audioClassTriggered} />
       );
     }
 
