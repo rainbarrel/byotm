@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Output = ({ onChangeText, errors }) => {
+const Output = ({ onChangeText, errors, disabled }) => {
   const classes = useStyles();
   const errorMessage = 'Please ensure this field is populated and formatted correctly (see placeholder)'
 
@@ -37,6 +37,7 @@ const Output = ({ onChangeText, errors }) => {
         </Grid>
         <TextField
           className="output-phone-number"
+          disabled={disabled}
           label="Recipient Phone Number"
           placeholder="555-916-1234"
           onChange={(e) => onChangeText(e, 'output1PhoneNumber')}
@@ -54,6 +55,7 @@ const Output = ({ onChangeText, errors }) => {
         <br></br>
         <TextField
           className="output-message"
+          disabled={disabled}
           label="Message"
           multiline
           placeholder="Hi, I just wanted to tell you that I love you!"
@@ -82,6 +84,7 @@ const Output = ({ onChangeText, errors }) => {
         </Grid>
         <TextField
           className="output-phone-number"
+          disabled={disabled}
           label="Recipient Phone Number"
           placeholder="555-818-4321"
           onChange={(e) => onChangeText(e, 'output2PhoneNumber')}
@@ -99,6 +102,7 @@ const Output = ({ onChangeText, errors }) => {
         <br></br>
         <TextField
           className="output-message"
+          disabled={disabled}
           label="Message"
           multiline
           placeholder="Can you please call me and leave a message? I miss you."

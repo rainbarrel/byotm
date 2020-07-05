@@ -9,13 +9,14 @@ const useStyles = makeStyles({
   },
 });
 
-const InputUrl = ({ onChange, error }) => {
+const InputUrl = ({ onChange, error, disabled }) => {
   const classes = useStyles();
   const errorMessage = 'Please ensure this field is populated and formatted correctly (see placeholder)'
 
   return (
     <TextField
       id='workflow-url'
+      disabled={disabled}
       error={error}
       helperText={error ? errorMessage : ''}
       onChange={onChange}

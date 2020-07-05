@@ -15,9 +15,16 @@ class App extends React.Component {
     this.state = {
       recognizer: null,
 
+      waitingForConfirmation: false,
+
+      audioClassTriggered: null,
+      phoneNumberRecipient: null,
+      messageToSend: null,
+
       startDisabled: false,
       stopDisabled: true,
       showInProgress: false,
+      inputsDisabled: false,
 
       modelUrl: '',
       output1PhoneNumber: '',
@@ -57,6 +64,7 @@ class App extends React.Component {
       .then(() => {
         this.setState({
           recognizer: null,
+          inputsDisabled: false,
           audioClass1Name: null,
           audioClass2Name: null,
           startDisabled: false,
@@ -114,41 +122,72 @@ class App extends React.Component {
 
     recognizer.listen(result => {
       const scores = result.scores;
-
       const audioClass1Score = scores[1];
       const audioClass2Score = scores[2];
 
+      let audioClassTriggered;
       let phoneNumberRecipient;
       let messageToSend;
 
       if (audioClass1Score > audioClass2Score) {
+        audioClassTriggered = audioClass1;
         phoneNumberRecipient = output1PhoneNumber;
         messageToSend = output1Message;
       } else if (audioClass2Score > audioClass1Score) {
+        audioClassTriggered = audioClass2;
         phoneNumberRecipient = output2PhoneNumber;
         messageToSend = output2Message;
       }
 
-      const body = {
-        payload: {
-          phoneNumber: phoneNumberRecipient,
-          message: messageToSend
-        }
-      };
-
-      fetch('https://us-east1-byotm-282218.cloudfunctions.net/twilio-send-sms', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => {
-          console.log('Success: ', res);
-        })
-        .catch((error) => {
-          console.error('Error: ', error);
+      if (!(this.state.waitingForConfirmation)) {
+        this.setState({
+          audioClassTriggered,
+          phoneNumberRecipient,
+          messageToSend,
+          waitingForConfirmation: true,
         });
+      } else { // currently waiting for confirmation
+        if (this.state.audioClassTriggered !== audioClassTriggered) {
+          this.setState({
+            audioClassTriggered: null,
+            phoneNumberRecipient: null,
+            messageToSend: null,
+            waitingForConfirmation: false,
+          });
+        } else {
+          const body = {
+            payload: {
+              phoneNumber: this.state.phoneNumberRecipient,
+              message: this.state.messageToSend
+            }
+          };
+
+          fetch('https://us-east1-byotm-282218.cloudfunctions.net/twilio-send-sms', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+          })
+            .then(() => {
+              this.setState({
+                audioClassTriggered: null,
+                phoneNumberRecipient: null,
+                messageToSend: null,
+                waitingForConfirmation: false,
+              });
+            })
+            .catch((error) => {
+              console.error('Error: ', error);
+              this.setState({
+                audioClassTriggered: null,
+                phoneNumberRecipient: null,
+                messageToSend: null,
+                waitingForConfirmation: false,
+              });
+            });
+        }
+      }
     }, {
       // https://github.com/tensorflow/tfjs-models/tree/master/speech-commands
       probabilityThreshold: 0.995,
@@ -159,6 +198,7 @@ class App extends React.Component {
       .then(() => {
         this.setState({
           recognizer: recognizer,
+          inputsDisabled: true,
           audioClass1Name: audioClass1,
           audioClass2Name: audioClass2,
           startDisabled: true,
@@ -190,6 +230,7 @@ class App extends React.Component {
           <InputUrl
             onChange={(e) => this.onChangeText(e, 'modelUrl')}
             error={this.state.errors.modelUrl}
+            disabled={this.state.inputsDisabled}
           />
 
           <WorkflowArrow />
@@ -211,6 +252,7 @@ class App extends React.Component {
           <Output
             onChangeText={this.onChangeText}
             errors={this.state.errors}
+            disabled={this.state.inputsDisabled}
           />
         </div>
   
