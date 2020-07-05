@@ -27,4 +27,4 @@ const InputUrl = ({ onChange, error, disabled }) => {
   );
 };
 
-export default InputUrl;
+export { InputUrl };

@@ -1,10 +1,7 @@
 import React from 'react';
 import './App.css';
-import { WorkflowArrow, ButtonSize, RecordingInProgress } from './components/common';
+import { WorkflowArrow, ButtonSize, RecordingInProgress, WaitingForConfirmation, InputUrl, InputDescription, Output } from './components';
 import { generateRecognizer } from './helpers';
-import InputDescription from './InputDescription';
-import Output from './Output';
-import InputUrl from './InputUrl';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 
@@ -211,9 +208,15 @@ class App extends React.Component {
 
   render() {
     let inProgressFeedback;
-
+    
     if (this.state.showInProgress) {
       inProgressFeedback = <RecordingInProgress />
+    }
+
+    let waitingForConfirmation;
+
+    if (this.state.waitingForConfirmation) {
+      waitingForConfirmation = <WaitingForConfirmation />
     }
 
     return (
@@ -225,6 +228,7 @@ class App extends React.Component {
         </div>
 
         {inProgressFeedback}
+        {waitingForConfirmation}
 
         <div className='app-workflow-container'>
           <InputUrl

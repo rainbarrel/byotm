@@ -122,4 +122,4 @@ const Output = ({ onChangeText, errors, disabled }) => {
   );
 };
 
-export default Output;
+export { Output };

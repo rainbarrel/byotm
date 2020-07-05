@@ -53,4 +53,4 @@ const InputDescription = ({ audioClass1Name, audioClass2Name }) => {
   );
 };
 
-export default InputDescription;
+export { InputDescription };
