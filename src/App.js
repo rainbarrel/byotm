@@ -139,6 +139,11 @@ class App extends React.Component {
       }
     }
 
+    if (!(this.state.recognizer)) {
+      errorPresent = true;
+      errorTracker.modelUrl = true;
+    }
+
     if (errorPresent) {
       this.setState({ errors: { ...errorTracker } });
     } else {
