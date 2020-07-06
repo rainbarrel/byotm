@@ -55,8 +55,11 @@ class App extends React.Component {
     newState[property] = text;
 
     if (property === 'modelUrl') {
-      if (this.validateModelUrl(text)) {
-        const recognizer = await generateRecognizer(text);
+      let modelUrl = text;
+
+      if (this.validateModelUrl(modelUrl)) {
+        const trimmedModelUrl = modelUrl.trim();
+        const recognizer = await generateRecognizer(trimmedModelUrl);
         const classLabels = recognizer.wordLabels();
         let classLabelsWithoutBackgroundNoise = [];
 
@@ -71,6 +74,7 @@ class App extends React.Component {
         const audioClass1Name = classLabelsWithoutBackgroundNoise[0];
         const audioClass2Name = classLabelsWithoutBackgroundNoise[1];
 
+        newState.modelUrl = trimmedModelUrl;
         newState.recognizer = recognizer;
         newState.audioClass1Name = audioClass1Name;
         newState.audioClass2Name = audioClass2Name;
@@ -109,9 +113,11 @@ class App extends React.Component {
     // valid modelUrl looks as follows:
     // https://teachablemachine.withgoogle.com/models/n2uo9MJNZ/
     const prefix = 'https://teachablemachine.withgoogle.com/models/';
-    const id = modelUrl.split('models/')[1];
 
-    return (modelUrl.includes(prefix) && (id.length === 9 || id.length === 10));
+    const trimmedModelUrl = modelUrl.trim();
+    const id = trimmedModelUrl.split('models/')[1];
+
+    return (trimmedModelUrl.includes(prefix) && (id.length === 9 || id.length === 10));
   }
 
   onStartClick() {
