@@ -1,27 +1,82 @@
 .app {
+  
+}
+
+.app-title {
+  color: #1967D2;
+  font-weight: bold;
+  margin: 15px;
+}
+
+.app-title p {
+  font-size: 4em;
+  margin: 0;
+}
+
+#title-subtitle {
+  font-size: 20px;
+}
+
+#title-subtitle > a  {
+  color: #1967D2;
+}
+
+.waiting-for-confirmation-banner-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  min-width: 100vw;
-  min-height: 60vh;
-}
-
-.btn-container button {
-  color: white;
-  width: 100px;
-  height: 150px;
-  font-size: 18px;
-  margin: 20px;
-  background: #1890ff;
-  border-radius: 10px;
-}
-
-.active {
-  background: #adcfef !important; /* FIXME: remove !important later */
-}
-
-.alert-container {
+  width: 60%;
+  margin: 12px auto 0px auto;
+  background: white;
+  color: black;
+  box-shadow: 0 2px 10px #6f6666;
   text-align: center;
-  width: 85%;
+
+	transform: scale(1);
+	animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.99);
+	}
+
+	70% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(0.99);
+	}
+}
+
+.waiting-for-confirmation-banner-text {
+  font-size: 20px;
+}
+
+.app-workflow-container {
+  display: flex;
+  margin: 40px 85px 60px 85px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workflow-stacked-arrows {
+  display: 'flex';
+  flex-direction: 'column';
+}
+
+.app-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  width: 30%;
+}
+
+#start-button:hover {
+  background-color: #9de88b;
+}
+
+#stop-button:hover {
+  background-color: #db7a86;
 }
